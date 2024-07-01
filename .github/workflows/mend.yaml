@@ -11,7 +11,7 @@ jobs:
       SCA: true
       SAST: false
       CN: false # TODO define template
-      SCA_Reports: 'SBOM'
+      SCA_Reports: 'RISK'
     secrets:
       MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
       MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
