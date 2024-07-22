@@ -9,7 +9,7 @@ jobs:
     with:
       MEND_URL: "https://saas-eu.mend.io"
       SCA: true
-      # SCA_Reachability: true
+      SCA_Reachability: true
       SAST: false
       CN: false # TODO define template
       SCA_Reports: 'RISK'
