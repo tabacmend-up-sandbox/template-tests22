@@ -2,18 +2,30 @@ name: Mend
 
 on: workflow_dispatch
 
-
+          
 jobs:
+  Node_build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.3
+      with:
+        node-version: 18.x
+    - name: NPM_Build
+      run: npm install
+    
   call-template:
-    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
-    with:
-      MEND_URL: "https://saas-eu.mend.io"
-      SCA: true
-      SCA_Reachability: true
-      SAST: false
-      CN: false # TODO define template
-      SCA_Reports: 'RISK'
-    secrets:
-      MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
-      MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
-      
+      uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+      with:
+        MEND_URL: "https://saas-eu.mend.io"
+        SCA: true
+        SCA_Reachability: true
+        SAST: false
+        CN: false # TODO define template
+        SCA_Reports: 'RISK'
+      secrets:
+        MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+        MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+        
