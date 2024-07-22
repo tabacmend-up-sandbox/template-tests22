@@ -18,6 +18,7 @@ jobs:
     
   call-template:
       uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+      needs: [Node_build]
       with:
         MEND_URL: "https://saas-eu.mend.io"
         SCA: true
