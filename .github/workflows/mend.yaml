@@ -23,19 +23,29 @@ jobs:
     #       node_modules/
     #       package-lock.json
     #       build/
+    # - name: Cache build artifacts
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #       node_modules/
+    #       package-lock.json
+    #     key: npm-artifacts
     - name: Cache build artifacts
       uses: actions/cache@v3
       with:
         path: |
-          node_modules/
+          node-modules/
           package-lock.json
-        key: npm-artifacts
+        key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/src/**') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
 
     
   call-template:
       uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
       needs: [Node_build]
       with:
+        cache-key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/src/**') }}
         MEND_URL: "https://saas-eu.mend.io"
         SCAN_Artifacts: npm-artifacts
         SCA: true
