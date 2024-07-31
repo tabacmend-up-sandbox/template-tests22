@@ -1,0 +1,27 @@
+name: Mend Demo
+
+on: workflow_dispatch
+
+          
+jobs:
+  Node_build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup Nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install node modules
+      run: npm install
+  call-template:
+    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+    with:
+      MEND_URL: "https://saas-eu.mend.io"
+      SCA: true
+      SCA_Reachability: true
+      SAST: true
+      CN: false # TODO define template
+      SCA_Reports: 'ALL'
+    secrets:
+      MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+      MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
