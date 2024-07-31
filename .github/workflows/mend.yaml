@@ -15,12 +15,22 @@ jobs:
         node-version: 18.x
     - name: NPM_Build
       run: npm install
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: npm-artifacts
+        path: |
+          node_modules/
+          package-lock.json
+          build/
+
     
   call-template:
       uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
       needs: [Node_build]
       with:
         MEND_URL: "https://saas-eu.mend.io"
+        SCAN_Artifacts: npm-artifacts
         SCA: true
         SCA_Reachability: true
         SAST: true
