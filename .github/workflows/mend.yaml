@@ -15,14 +15,13 @@ jobs:
         node-version: 18.x
     - name: NPM_Build
       run: npm install
-    # - name: Upload artifacts
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: npm-artifacts
-    #     path: |
-    #       node_modules/
-    #       package-lock.json
-    #       build/
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: npm-artifacts
+        path: |
+          node_modules/
+          package-lock.json
     # - name: Cache build artifacts
     #   uses: actions/cache@v3
     #   with:
@@ -30,22 +29,22 @@ jobs:
     #       node_modules/
     #       package-lock.json
     #     key: npm-artifacts
-    - name: Cache build artifacts
-      uses: actions/cache@v3
-      with:
-        path: |
-          node-modules/
-          package-lock.json
-        key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/src/**') }}
-        restore-keys: |
-          ${{ runner.os }}-build-
+    # - name: Cache build artifacts
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #       node-modules/
+    #       package-lock.json
+    #     key: npm-artifacts
+    #     restore-keys: |
+    #       npm-artifacts
 
     
   call-template:
       uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
       needs: [Node_build]
       with:
-        cache-key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/src/**') }}
+        cache-key: npm-artifacts
         MEND_URL: "https://saas-eu.mend.io"
         SCAN_Artifacts: npm-artifacts
         SCA: true
