@@ -44,7 +44,6 @@ jobs:
       uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
       needs: [Node_build]
       with:
-        cache-key: npm-artifacts
         MEND_URL: "https://saas-eu.mend.io"
         SCAN_Artifacts: npm-artifacts
         SCA: true
