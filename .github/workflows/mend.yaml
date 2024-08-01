@@ -22,8 +22,8 @@ jobs:
         path: |
           node_modules/
           package-lock.json
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
+    # - name: Download build artifacts
+    #   uses: actions/download-artifact@v3
       # with:
       #   name: npm-artifacts
       #   path: |
@@ -52,7 +52,7 @@ jobs:
     needs: Node_build
     with:
       MEND_URL: "https://saas-eu.mend.io"
-      SCAN_Artifacts: npm-artifacts.zip
+      # SCAN_Artifacts: npm-artifacts.zip
       SCA: true
       SCA_Reachability: true
       SAST: true
