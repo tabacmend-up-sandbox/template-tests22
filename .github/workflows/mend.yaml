@@ -40,18 +40,18 @@ jobs:
     #       npm-artifacts
 
     
-  call-template:
-      uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
-      needs: [Node_build]
-      with:
-        MEND_URL: "https://saas-eu.mend.io"
-        SCAN_Artifacts: npm-artifacts
-        SCA: true
-        SCA_Reachability: true
-        SAST: true
-        CN: false # TODO define template
-        SCA_Reports: 'ALL'
-      secrets:
-        MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
-        MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
-        
+  Mend:
+    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+    needs: Node_build
+    with:
+      MEND_URL: "https://saas-eu.mend.io"
+      SCAN_Artifacts: npm-artifacts
+      SCA: true
+      SCA_Reachability: true
+      SAST: true
+      CN: false # TODO define template
+      SCA_Reports: 'ALL'
+    secrets:
+      MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+      MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+      
