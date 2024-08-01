@@ -60,7 +60,7 @@ jobs:
     needs: Node_build
     with:
       MEND_URL: "https://saas-eu.mend.io"
-      CACHE: "npm"
+      CACHE: npm
       # SCAN_Artifacts: npm-artifacts.zip
       SCA: true
       SCA_Reachability: true
