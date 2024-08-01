@@ -24,11 +24,11 @@ jobs:
           package-lock.json
     - name: Download build artifacts
       uses: actions/download-artifact@v3
-      with:
-        name: npm-artifacts
-        path: |
-          node_modules/
-          package-lock.json
+      # with:
+      #   name: npm-artifacts
+      #   path: |
+      #     node_modules/
+      #     package-lock.json
     # - name: Cache build artifacts
     #   uses: actions/cache@v3
     #   with:
