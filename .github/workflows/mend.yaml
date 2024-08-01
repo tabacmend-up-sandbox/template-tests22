@@ -25,7 +25,7 @@ jobs:
     - name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
-        name: npm-artifacts.zip
+        name: npm-artifacts
         path: |
           node_modules/
           package-lock.json
