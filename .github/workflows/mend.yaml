@@ -23,6 +23,7 @@ jobs:
           node_modeules/
           package-lock.json
         key: npm
+        restore-keys: npm
     # - name: Upload artifacts
     #   uses: actions/upload-artifact@v4
     #   with:
