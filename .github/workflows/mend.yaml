@@ -15,16 +15,14 @@ jobs:
         node-version: 18.x
     - name: NPM_Build
       run: npm install
-    - name: Cache dependencies
+    - uses: actions/cache/save@v3
       id: cache
-      uses: actions/cache@v2
       with:
         path: | 
           ~/.npm
           node_modeules/
           package-lock.json
         key: npm
-        restore-keys: npm
     # - name: Upload artifacts
     #   uses: actions/upload-artifact@v4
     #   with:
