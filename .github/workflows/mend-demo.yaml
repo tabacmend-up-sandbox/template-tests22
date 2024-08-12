@@ -16,7 +16,7 @@ jobs:
     - name: Install node modules
       run: npm install
   call-template:
-    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-demo.yaml@main
     with:
       MEND_URL: "https://saas-eu.mend.io"
       SCA: true
