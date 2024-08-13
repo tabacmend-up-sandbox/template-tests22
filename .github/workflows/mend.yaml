@@ -24,7 +24,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ./node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        key: node-
         restore-keys: |
           node-
     # - uses: actions/cache/save@v3
@@ -79,19 +79,19 @@ jobs:
         restore-keys: |
           node- 
           
-  # Mend:
-  #   uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
-  #   needs: Node_build
-  #   with:
-  #     MEND_URL: "https://saas-eu.mend.io"
-  #     CACHE: $ {{ steps.Node_buld.cache.restore-keys }}
-  #     SCAN_Artifacts: node-
-  #     SCA: true
-  #     SCA_Reachability: true
-  #     SAST: false
-  #     CN: false # TODO define template
-  #     SCA_Reports: 'ALL'
-  #   secrets:
-  #     MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
-  #     MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+  Mend:
+    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+    needs: Node_build
+    with:
+      MEND_URL: "https://saas-eu.mend.io"
+      CACHE: node-
+      # SCAN_Artifacts: node-
+      SCA: true
+      SCA_Reachability: true
+      SAST: false
+      CN: false # TODO define template
+      SCA_Reports: 'ALL'
+    secrets:
+      MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+      MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
       
