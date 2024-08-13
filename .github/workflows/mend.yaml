@@ -13,22 +13,28 @@ jobs:
       uses: actions/setup-node@v4.0.3
       with:
         node-version: 18.x
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      shell: bash
-      run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+    # - name: Get npm cache directory
+    #   id: npm-cache-dir
+    #   shell: bash
+    #   run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
     - name: NPM_Build
       run: npm install
-    - uses: actions/cache/save@v3
-      id: cache
+    
+    - name: Cache Node packages
+      uses: actions/cache@v3
       with:
-        path: | 
-          ${{ steps.npm-cache-dir.outputs.dir }}
-          **/node_modules
-          package-lock.json
+        path: ./node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          node-
+    # - uses: actions/cache/save@v3
+    #   id: cache
+    #   with:
+    #     path: | 
+    #       ${{ steps.npm-cache-dir.outputs.dir }}
+    #       **/node_modules
+    #       package-lock.json
+    #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
     # - name: Upload artifacts
     #   uses: actions/upload-artifact@v4
     #   with:
@@ -60,20 +66,32 @@ jobs:
     #     restore-keys: |
     #       npm-artifacts
 
-    
-  Mend:
-    uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+
+  Restore_cache:
+    runs-on: ubuntu-latest
     needs: Node_build
-    with:
-      MEND_URL: "https://saas-eu.mend.io"
-      CACHE: $ {{ steps.Node_buld.cache.restore-keys }}
-      # SCAN_Artifacts: npm-artifacts.zip
-      SCA: true
-      SCA_Reachability: true
-      SAST: false
-      CN: false # TODO define template
-      SCA_Reports: 'ALL'
-    secrets:
-      MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
-      MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+    steps:
+    - name: Restore Node cache
+      uses: actions/cache@v3
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          node- 
+          
+  # Mend:
+  #   uses: tabacmend-up-sandbox/mend-templates/.github/workflows/mend-scan-template.yaml@main
+  #   needs: Node_build
+  #   with:
+  #     MEND_URL: "https://saas-eu.mend.io"
+  #     CACHE: $ {{ steps.Node_buld.cache.restore-keys }}
+  #     SCAN_Artifacts: node-
+  #     SCA: true
+  #     SCA_Reachability: true
+  #     SAST: false
+  #     CN: false # TODO define template
+  #     SCA_Reports: 'ALL'
+  #   secrets:
+  #     MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+  #     MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
       
